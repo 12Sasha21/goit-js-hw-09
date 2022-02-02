@@ -1,15 +1,16 @@
+import Notiflix from 'notiflix';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 require('flatpickr/dist/themes/dark.css');
 
 const input = document.querySelector('input#datetime-picker');
-const start = document.querySelector('button[data-start]');
+const startBtn = document.querySelector('button[data-start]');
 const dayface = document.querySelector('.value[data-days]');
 const hourface = document.querySelector('.value[data-hours]');
 const minuteface = document.querySelector('.value[data-minutes]');
 const secondface = document.querySelector('.value[data-seconds  ]');
 
-start.disabled = true;
+startBtn.disabled = true;
 
 const options = {
   enableTime: true,
@@ -18,11 +19,11 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
-      window.alert('Please choose a date in the future');
+      Notiflix.Notify.failure('Please choose a date in the future');
       return;
     }
-    if (selectedDates[0] > new Date()) {
-      start.disabled = false;
+    if (selectedDates) {
+      startBtn.disabled = false;
     }
   },
 };
@@ -31,7 +32,7 @@ const fp = flatpickr(input, options);
 
 const timer = {
   isActive: false,
-  start() {
+  startTimer() {
     if (this.isActive) {
       return;
     }
@@ -39,15 +40,17 @@ const timer = {
     const endTime = fp.selectedDates[0];
     setInterval(() => {
       const startTime = Date.now();
-      const delta = endTime - startTime;
-      const timeFace = convertMs(delta);
+      const deltaTime = endTime - startTime;
+      const timeFace = convertMs(deltaTime);
       updateTimeface(timeFace);
+      console.log(deltaTime);
     }, 1000);
   },
 };
 
-start.addEventListener('click', () => {
-  timer.start();
+startBtn.addEventListener('click', () => {
+  timer.startTimer();
+  startBtn.disabled = true;
 });
 
 function convertMs(ms) {
