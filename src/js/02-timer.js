@@ -32,18 +32,24 @@ const fp = flatpickr(input, options);
 
 const timer = {
   isActive: false,
+  timerId: null,
   startTimer() {
     if (this.isActive) {
       return;
     }
     this.isActive = true;
     const endTime = fp.selectedDates[0];
-    setInterval(() => {
+    this.timerId = setInterval(() => {
       const startTime = Date.now();
       const deltaTime = endTime - startTime;
       const timeFace = convertMs(deltaTime);
       updateTimeface(timeFace);
-      console.log(deltaTime);
+      if (deltaTime <= 0) {
+        clearInterval(this.timerId);
+        this.isActive = false;
+        const time = convertMs(0);
+        updateTimeface(time);
+      }
     }, 1000);
   },
 };
