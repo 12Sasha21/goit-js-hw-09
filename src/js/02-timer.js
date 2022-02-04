@@ -58,7 +58,7 @@ const timer = {
 
 startBtn.addEventListener('click', () => {
   timer.startTimer();
-  startBtn.disabled = true;
+  startBtn.disabled = true; 
 });
 
 function convertMs(ms) {
