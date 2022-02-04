@@ -8,7 +8,7 @@ const startBtn = document.querySelector('button[data-start]');
 const dayface = document.querySelector('.value[data-days]');
 const hourface = document.querySelector('.value[data-hours]');
 const minuteface = document.querySelector('.value[data-minutes]');
-const secondface = document.querySelector('.value[data-seconds  ]');
+const secondface = document.querySelector('.value[data-seconds]');
 
 startBtn.disabled = true;
 
@@ -22,9 +22,7 @@ const options = {
       Notiflix.Notify.failure('Please choose a date in the future');
       return;
     }
-    if (selectedDates) {
-      startBtn.disabled = false;
-    }
+    startBtn.disabled = false;
   },
 };
 
