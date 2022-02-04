@@ -1,14 +1,14 @@
 import Notiflix from 'notiflix';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-require('flatpickr/dist/themes/dark.css');
+// require('flatpickr/dist/themes/dark.css');
 
-const input = document.querySelector('input#datetime-picker');
-const startBtn = document.querySelector('button[data-start]');
-const dayface = document.querySelector('.value[data-days]');
-const hourface = document.querySelector('.value[data-hours]');
-const minuteface = document.querySelector('.value[data-minutes]');
-const secondface = document.querySelector('.value[data-seconds]');
+const input = document.querySelector('#datetime-picker');
+const startBtn = document.querySelector('[data-start]');
+const dayface = document.querySelector('[data-days]');
+const hourface = document.querySelector('[data-hours]');
+const minuteface = document.querySelector('[data-minutes]');
+const secondface = document.querySelector('[data-seconds]');
 
 startBtn.disabled = true;
 
@@ -35,13 +35,17 @@ const timer = {
     if (this.isActive) {
       return;
     }
-    this.isActive = true;
+
     const endTime = fp.selectedDates[0];
+
+    this.isActive = true;
     this.timerId = setInterval(() => {
       const startTime = Date.now();
       const deltaTime = endTime - startTime;
       const timeFace = convertMs(deltaTime);
+
       updateTimeface(timeFace);
+
       if (deltaTime <= 0) {
         clearInterval(this.timerId);
         this.isActive = false;
